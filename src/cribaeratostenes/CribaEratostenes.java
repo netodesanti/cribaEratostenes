@@ -1,6 +1,5 @@
 package cribaeratostenes;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CribaEratostenes {
@@ -20,16 +19,12 @@ public class CribaEratostenes {
 			primo[0] = primo[1] = false;
 			
 			//Marca números no primos como false
-			for (i = 2; i< Math.sqrt(dim) + 1; i++){
-				if (primo[i]){
-					for (j = 2*i; j < dim; j+=i){
-						primo[j] = false;
-					}
-				}
-			}
+			marcarNumerosNoPrimos(primo);
 			
+			//Creación de arreglo final
 			int[] primos = new int[numeroDePrimos(dim, primo)];
 			
+			//Retorna arreglo
 			return arregloPrimos(primos, primo);
 		} else {
 			return new int[0];
@@ -37,10 +32,25 @@ public class CribaEratostenes {
 		
 	}
 
+	//Marca los números no primos como false
+	private static boolean[] marcarNumerosNoPrimos(boolean[] primo) {
+		for (i = 2; i< Math.sqrt(dim) + 1; i++){
+			if (primo[i]){
+				for (j = 2*i; j < dim; j+=i){
+					primo[j] = false;
+				}
+			}
+		}
+		
+		return primo;
+		
+	}
+
+	//Devuelve el arreglo final
 	private static int[] arregloPrimos(int[] pArregloFinal, boolean[] pArregloBool) {
 		for (i = 0,j=0; i < dim; i++){
 			if (pArregloBool[i])
-				pArregloFinal[j++] = 1;
+				pArregloFinal[j++] = i;
 		}
 		return pArregloFinal;
 	}
